@@ -1,0 +1,74 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    font-family: "Merriweather", serif;
+    font-weight: 700;
+    font-style: normal;
+}
+div, section,header
+{
+    margin-top: 25px;
+    margin-bottom: 20px;
+    margin-left: 15px;
+}
+
+#about h2{
+    padding-bottom: 20px;
+}
+.menu li{
+    display: inline;
+    margin-top: 45px;
+}
+.menu a
+{
+    font-weight: bold;
+    text-decoration: none;
+    color: black;
+
+}
+.menu a:hover
+{
+    color: red;
+    
+}
+.menu ul{
+    margin-top: 35px;
+}
+table {
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    padding: 10px;
+    border: solid;
+    text-align: center;
+}
+
+th, td {
+    padding: 5px;
+    text-align: center;
+    border: 2px solid black;
+}
+
+footer{
+    background-color: black;
+    color: white;
+    margin: 0px;
+    padding: 50px;
+    box-sizing: border-box
+    
+
+}
+.footr p
+{
+    font-size: xx-large;
+}
+.food-img
+{
+    width: 700px;
+    height: 450px;
+    padding-bottom: 15px;
+}
+
+.Spell h2{
+    padding-bottom: 25px;
+}
