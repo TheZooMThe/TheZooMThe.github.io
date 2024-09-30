@@ -1,25 +1,43 @@
-*{
+html, body{
     margin: 0px;
     padding: 0px;
     box-sizing: border-box;
     font-family: "Merriweather", serif;
-    font-weight: 700;
     font-style: normal;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    font-size: 20px;
 }
-div, section,header
+header, main
 {
+    flex-grow: 1;
     margin-top: 25px;
     margin-bottom: 20px;
-    margin-left: 15px;
+    margin-left: 35px;
+    margin-right: 35px;
 }
 
 #about h2{
     padding-bottom: 20px;
 }
-.menu li{
-    display: inline;
-    margin-top: 45px;
+#menu_flex{
+    display: flex;
+    flex-direction: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    
+    
 }
+
+.menu-point{
+margin-right: 15px;
+}
+
+#menu>a:active{
+    color: red;
+}
+
 .menu a
 {
     font-weight: bold;
@@ -35,6 +53,13 @@ div, section,header
 .menu ul{
     margin-top: 35px;
 }
+
+
+#abutton {
+    color: tomato;
+}
+
+
 table {
     border-collapse: collapse;
     margin-bottom: 20px;
@@ -72,3 +97,52 @@ footer{
 .Spell h2{
     padding-bottom: 25px;
 }
+
+
+@media only screen and (max-width: 1400px){
+
+    .menu{
+        flex-direction: column;
+        gap: 30px;
+        margin-bottom: 32px;
+    
+    }
+    
+    h1{
+        margin: 30px auto ;
+      }
+    
+    #menu_flex{
+        margin: 0;
+        justify-content: space-between;
+    }
+    }
+    
+    /* media for screens <1000px */
+    
+    @media only screen and (max-width: 1200px){
+    
+        #menu_flex{
+            flex-direction: column;
+            gap: 66px;
+        }
+        
+        h2{
+            text-align: center;
+            margin: 30px 0;
+        }
+        h1{
+            text-align: center;
+          }
+        .img_main>img{
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 50%;
+            object-fit: cover;
+        }
+        
+        
+    }
+    
+     

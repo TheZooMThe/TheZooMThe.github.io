@@ -1,0 +1,201 @@
+html, body{
+    margin: 0px;
+    padding: 0px;
+    font-family: "Merriweather", serif;
+    font-style: normal;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    font-size: 20px;
+}
+
+header, main
+{
+    flex-grow: 1;
+    margin-top: 25px;
+    margin-bottom: 20px;
+    margin-left: 35px;
+    margin-right: 35px;
+}
+
+#abutton {
+    color: tomato;
+}
+
+
+.food_card>img{
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 35px;
+    margin-bottom: 10px;
+}
+
+.dishes, .main-dishes, .drinks{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-row-gap: 10px;
+    justify-items: center;
+}
+
+.food_card{
+display: flex;
+flex-flow: column wrap;
+padding: 30px 40px 30px 40px;
+border: 2px solid transparent;
+border-radius: 35px;
+cursor: pointer;
+background: color white; 
+box-shadow: 17px 19px 24px rgba(0, 0, 0, 0.13);
+width: 300px;
+max-height: 600px;
+justify-content: space-between;
+align-content: center;
+}
+
+.food_card:hover{
+    
+    border: 2px solid tomato;
+    border-radius: 35px;
+}
+
+.price{
+font-size: 1.2rem;
+margin: 0px;
+}
+
+.name{
+font-size: 1.2rem;
+margin-bottom: 10px;
+margin-top: 0px;
+}
+
+.volume{
+color: grey;
+margin: 0px;
+}
+
+.food_card>button{
+background-color: #f1eee9;
+margin-top: 10px;
+border-radius: 10px;
+cursor: pointer;
+padding: 10px 30px 10px 30px;
+margin-top: 10px;
+font-size: 1rem;
+}
+
+.food_card>button:hover{
+    background-color: rgb(175, 171, 171);
+}
+
+#menu_flex{
+    display: flex;
+    flex-direction: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    
+    
+}
+
+.menu-point{
+margin-right: 15px;
+}
+
+#menu>a:active{
+    color: red;
+}
+
+.menu a
+{
+    font-weight: bold;
+    text-decoration: none;
+    color: black;
+
+}
+.menu a:hover
+{
+    color: red;
+    
+}
+.menu ul{
+    margin-top: 35px;
+}
+
+
+footer{
+    
+    background-color: black;
+    color: white;
+    margin: 0px;
+    font-size: xx-large;
+    padding: 50px;
+    box-sizing: border-box
+    
+
+}
+
+.food-img
+{
+    width: 700px;
+    height: 450px;
+    padding-bottom: 15px;
+}
+
+/* media for screens <1200px */
+
+@media only screen and (max-width: 1400px){
+
+.menu{
+    flex-direction: column;
+    gap: 30px;
+    margin-bottom: 32px;
+
+}
+
+.food_card>button{
+    padding: 35px 60px 32px 60px;
+}
+
+h1{
+    margin: 30px auto ;
+  }
+
+#menu_flex{
+    margin: 0;
+    justify-content: space-between;
+}
+}
+
+/* media for screens <1000px */
+
+@media only screen and (max-width: 1200px){
+
+    #menu_flex{
+        flex-direction: column;
+        gap: 66px;
+    }
+    
+    h2{
+        text-align: center;
+        margin: 30px 0;
+    }
+    h1{
+        text-align: center;
+      }
+    .dishes, .main-dishes, .drinks{
+        margin: auto;
+        max-width: 980px;
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr 1fr;
+        justify-items: center;
+        row-gap: 10px;
+    
+    }
+    
+    
+}
+
+ 
