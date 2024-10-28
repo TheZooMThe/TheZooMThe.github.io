@@ -54,10 +54,6 @@ justify-content: space-between;
 align-content: center;
 }
 
-.food_card>button:hover{
-    background-color: rgb(175, 171, 171);
-}
-
 .food_card:hover{
     
     border: 2px solid tomato;
@@ -101,6 +97,10 @@ font-size: 1rem;
     align-items: center;
     
     
+}
+
+.fieldset-switch{
+    border:0 none;
 }
 
 .menu-point{
@@ -221,7 +221,23 @@ margin-right: 15px;
 }
 
 
-
+.food_card.selected {
+    border: 2px solid tomato; 
+  }
+  
+  #customer-order .order-item {
+    padding: 8px 0;
+    font-size: 14px;
+    color: #333;
+  }
+  
+  #total-cost {
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    color:  tomato;
+  }
+  
 
 
 footer{
@@ -293,41 +309,21 @@ h1{
         margin: auto;
         max-width: 980px;
         display: grid;
-        grid-template-columns: 1fr 1fr;
-        grid-template-rows: 1fr 1fr 1fr;
-        justify-items: center;
-        row-gap: 10px;
-    
-    }
-    
-    
-}
-
-@media only screen and (max-width: 800px){
-
-    #menu_flex{
-        flex-direction: column;
-        gap: 66px;
-    }
-    
-    h2{
-        text-align: center;
-        margin: 30px 0;
-    }
-    h1{
-        text-align: center;
-      }
-    .dishes, .main-dishes, .drinks{
-        margin: auto;
-        max-width: 980px;
-        display: grid;
         grid-template-columns: 1fr;
         grid-template-rows: 1fr 1fr 1fr;
         justify-items: center;
         row-gap: 10px;
     
     }
-    
+    #main_div_form{
+        width: 340px;
+        grid-template-columns: 1fr;
+        gap: 50px;
+    }
+    .newspapper{
+        max-width: 250px;
+    }
     
 }
 
+ 
