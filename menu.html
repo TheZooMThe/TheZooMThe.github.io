@@ -27,19 +27,58 @@
     
     <main>
         <div class="main-cont">
+            
             <section id="soup">
                 <h2>Выберите суп</h2>
+                <div class="filter-container" data-category="soups">
+                    <button class="filter-button" data-kind="fish">Рыбный</button>
+                    <button class="filter-button" data-kind="meat">Мясной</button>
+                    <button class="filter-button" data-kind="veg">Вегетарианский</button>
+                  </div>
+                  
                 <div class="dishes"></div>
             </section>
+
             <section id="mid_dishes">
                 <h2>Основные блюда</h2>
+                <div class="filter-container">
+                    <button class="filter-button" data-category="mainDishes" data-kind="fish">рыбное</button>
+                    <button class="filter-button" data-category="mainDishes" data-kind="meat">мясное</button>
+                    <button class="filter-button" data-category="mainDishes" data-kind="veg">вегетарианское</button>
+                  </div>
                 <div class="main-dishes"></div>
             </section>
+
+            <section id="salads">
+                <h2>Салаты и стартеры</h2>
+                <div class="filter-container">
+                    <button class="filter-button" data-category="salads" data-kind="fish">рыбный</button>
+                    <button class="filter-button" data-category="salads" data-kind="meat">мясной</button>
+                    <button class="filter-button" data-category="salads" data-kind="veg">вегетарианский</button>
+                  </div>
+                <div class="salad"></div>
+            </section>
+
+            <section id="desserts">
+                <h2>Десерты</h2>
+                <div class="filter-container">
+                    <button class="filter-button" data-category="desserts" data-kind="small">маленькая порция</button>
+                    <button class="filter-button" data-category="desserts" data-kind="medium">средняя порция</button>
+                    <button class="filter-button" data-category="desserts" data-kind="large">большая порция</button>
+                  </div>
+                <div class="dessert"></div>
+            </section>
+
             <section id="drinks_main">
                 <h2>Напитки</h2>
+                <div class="filter-container">
+                    <button class="filter-button" data-category="drinks" data-kind="cold">холодный</button>
+                    <button class="filter-button" data-category="drinks" data-kind="hot">горячий</button>
+                  </div>
                 <div class="drinks"></div>
             </section>
         </div>
+
         <form action="https://httpbin.org/post" method="post">
             <fieldset id="main-fieldset">
                 <legend id="legend-form">Сделать заказ</legend>
@@ -51,35 +90,42 @@
                             <label>Суп</label>
                             <div class="order-item" id="drop-soup">Суп не выбран</div>
                         </div>
-                    
+
                         <div class="drop-menu">
                             <label>Главное блюдо</label>
                             <div class="order-item" id="drop-main-dishes">Главное блюдо не выбрано</div>
                         </div>
-                    
+
+                        <div class="drop-menu">
+                            <label>Салат или стартер</label>
+                            <div class="order-item" id="drop-salads">Салат или стартер не выбран</div>
+                        </div>
+
+                        <div class="drop-menu">
+                            <label>Десерт</label>
+                            <div class="order-item" id="drop-desserts">Десерт не выбран</div>
+                        </div>
+
                         <div class="drop-menu">
                             <label>Напиток</label>
                             <div class="order-item" id="drop-main-drinks">Напиток не выбран</div>
                         </div>
-                    
+
                         <div id="total-cost" style="display: none;"></div>
-                    
+
                         <div id="comment">
                             <label for="comment-textarea">Комментарии к заказу</label>
                             <textarea id="comment-textarea" name="comment"></textarea>
                         </div>
                     </div>
-                    
 
                     <div id="customer-data">
                         <h3 class="order-data">Ваши данные</h3>
-
 
                         <div class="input">
                             <label for="input-name">Имя</label>
                             <input type="text" class="input-field" id="input-name" name="user-name" required>
                         </div>
-
 
                         <div class="input">
                             <label for="input-email">Email</label>
@@ -87,8 +133,8 @@
                         </div>
 
                         <div class="newspapper">
-                        <input type="checkbox" id="news" name="news" value="yes" checked>
-                        <label  for="news">Получать информацию о скидках и  акциах</label>
+                            <input type="checkbox" id="news" name="news" value="yes" checked>
+                            <label for="news">Получать информацию о скидках и акциах</label>
                         </div>
 
                         <div class="input">
@@ -96,35 +142,30 @@
                             <input type="text" class="input-field" id="input-phone" name="user-phone" required>
                         </div>
 
-
                         <div class="input">
                             <label for="input-address">Адрес доставки</label>
                             <input type="text" class="input-field" id="input-address" name="user-address" required>
                             <p class="input-note">Доставка осуществляется только по Москве</p>
                         </div>
 
-
-
-
                         <div id="delivery-time">
                             <p id="delivery-time-main-label">Время доставки:</p>
                             <fieldset class="fieldset-switch">
-                            <div class="radio-div">
-                                <input type="radio" id="time-now" name="when_delivery" value="now">
-                                <label for="radio-time-now">Как можно скорее</label>
-                            </div>
+                                <div class="radio-div">
+                                    <input type="radio" id="time-now" name="when_delivery" value="now">
+                                    <label for="radio-time-now">Как можно скорее</label>
+                                </div>
 
-                            <div class="radio-div">
-                                <input type="radio" id="time-in-time" name="when_delivery" value="in-time">
-                                <label for="radio-time-in-time">К указанному времени</label>
-                            </div>
+                                <div class="radio-div">
+                                    <input type="radio" id="time-in-time" name="when_delivery" value="in-time">
+                                    <label for="radio-time-in-time">К указанному времени</label>
+                                </div>
                             </fieldset>
                         </div>
 
-
                         <div class="input">
                             <label for="input-time">Укажите время доставки</label>
-                            <input type="time" class="input-field" name="time" id="input-time" min="07:00" max="23:00" step="300" required >
+                            <input type="time" class="input-field" name="time" id="input-time" min="07:00" max="23:00" step="300" required>
                             <p class="input-note">Доступное время с 7:00 до 23:00</p>
                         </div>
 
@@ -135,7 +176,6 @@
                     </div>
                 </div>
             </fieldset>
-
         </form>
     </main>
 
@@ -144,7 +184,8 @@
             <p>Позвонить нам +7-000-000-00-00</p>
         </div>
     </footer>
-  <script src="js/massiva_food.js"></script>
-  <script src="js/foodcard.js"></script>
+
+    <script src="js/massiva_food.js"></script>
+    <script src="js/foodcard.js"></script>
 </body>
 </html>

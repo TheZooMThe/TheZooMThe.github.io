@@ -23,6 +23,21 @@ header, main
     color: tomato;
 }
 
+.filter-button{
+
+    user-select: 0;
+    transition: all 0.25s;
+    cursor: pointer;
+    border-radius:  25px;
+    height: 50px;
+    width:  150px;
+    font-weight: 50px;
+}
+
+.filter-button:hover{
+    color: tomato;
+    background-color: grey;
+}
 
 .food_card>img{
     width: 300px;
@@ -32,7 +47,7 @@ header, main
     margin-bottom: 10px;
 }
 
-.dishes, .main-dishes, .drinks{
+.dishes, .main-dishes, .drinks,.salad,.dessert{
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-row-gap: 10px;
@@ -161,6 +176,12 @@ margin-right: 15px;
     height: 39px;
     
 }
+
+.filter-button.active {
+    background-color: #a8d5ba; /* Зеленый цвет для активного фильтра */
+    color: white;
+    border-color: #a8d5ba;
+  }
 
 .input{
     display: flex;
