@@ -27,7 +27,93 @@
     
     <main>
         <div class="main-cont">
-            
+            <div class="menu">
+                <div class="combo">
+                    <h2 id="combo-zag">Доступные для заказа комбо</h2>
+                    <div class="combo-grid">
+                        <div class="combo-column">
+                            <div class="dish">
+                                <img class="combo-icon" src="img/soup.png" alt="Суп">
+                                <p>Суп</p>
+                            </div>
+                            <div class="dish">
+                                <img class="combo-icon" src="img/main.png" alt="Главное блюдо">
+                                <p>Главное блюдо</p>
+                            </div>
+                            <div class="dish">
+                                <img class="combo-icon" src="img/salad.png" alt="Салат">
+                                <p>Салат</p>
+                            </div>
+                            <div class="dish">
+                                <img class="combo-icon" src="img/drink.png" alt="Напиток">
+                                <p>Напиток</p>
+                            </div>
+                        </div>
+                        <div class="combo-column">
+                            <div class="dish">
+                                <img class="combo-icon" src="img/soup.png" alt="Суп">
+                                <p>Суп</p>
+                            </div>
+                            <div class="dish">
+                                <img class="combo-icon" src="img/main.png" alt="Главное блюдо">
+                                <p>Главное блюдо</p>
+                            </div>
+                            <div class="dish">
+                                <img class="combo-icon" src="img/drink.png" alt="Напиток">
+                                <p>Напиток</p>
+                            </div>
+                        </div>
+                        <div class="combo-column">
+                            <div class="dish">
+                                <img class="combo-icon" src="img/soup.png" alt="Суп">
+                                <p>Суп</p>
+                            </div>
+                            <div class="dish">
+                                <img class="combo-icon" src="img/salad.png" alt="Салат">
+                                <p>Салат</p>
+                            </div>
+                            <div class="dish">
+                                <img class="combo-icon" src="img/drink.png" alt="Напиток">
+                                <p>Напиток</p>
+                            </div>
+                        </div>
+                        <div class="combo-column">
+                            <div class="dish">
+                                <img class="combo-icon" src="img/main.png" alt="Главное блюдо">
+                                <p>Главное блюдо</p>
+                            </div>
+                            <div class="dish">
+                                <img class="combo-icon" src="img/salad.png" alt="Салат">
+                                <p>Салат</p>
+                            </div>
+                            <div class="dish">
+                                <img class="combo-icon" src="img/drink.png" alt="Напиток">
+                                <p>Напиток</p>
+                            </div>
+                        </div>
+                        <div class="combo-column">
+                            <div class="dish">
+                                <img class="combo-icon" src="img/main.png" alt="Главное блюдо">
+                                <p>Главное блюдо</p>
+                            </div>
+                            <div class="dish">
+                                <img class="combo-icon" src="img/drink.png" alt="Напиток">
+                                <p>Напиток</p>
+                            </div>
+                        </div>
+                        <div class="combo-column">
+                            <div class="dish">
+                                <img class="combo-icon" src="img/desert.png" alt="Десерт">
+                                <p>Десерт</p>
+                                <p class="note">(Можно добавить к любому заказу)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                </div>
+                
+
             <section id="soup">
                 <h2>Выберите суп</h2>
                 <div class="filter-container" data-category="soups">
@@ -79,7 +165,7 @@
             </section>
         </div>
 
-        <form action="https://httpbin.org/post" method="post">
+        <form id="order-form" action="https://httpbin.org/post" method="post">
             <fieldset id="main-fieldset">
                 <legend id="legend-form">Сделать заказ</legend>
                 <div id="main_div_form">
@@ -171,7 +257,7 @@
 
                         <div class="buttons">
                             <button class="form-btn" type="reset" id="reset-btn">Сбросить</button>
-                            <input class="form-btn" type="submit" value="Отправить">
+                            <button class="form-btn" id="submit-btn" type="submit">Отправить</button>
                         </div>
                     </div>
                 </div>
