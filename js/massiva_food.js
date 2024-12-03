@@ -1,19 +1,45 @@
 const orderContainer = {
-    soups: document.querySelector("#drop-soup"),
-    mainDishes: document.querySelector("#drop-main-dishes"),
-    salads: document.querySelector("#drop-salads"),
-    desserts: document.querySelector("#drop-desserts"),
-    drinks: document.querySelector("#drop-main-drinks"),
+    soup: document.querySelector("#drop-soup"),
+    "main-course": document.querySelector("#drop-main-dishes"),
+    salad: document.querySelector("#drop-salads"),
+    dessert: document.querySelector("#drop-desserts"),
+    drink: document.querySelector("#drop-main-drinks"),
 };
 
+const orderSummaryPanel = document.querySelector("#order-summary-panel"); 
+const totalCostDiv = document.querySelector("#total-cost"); 
+const checkoutButton = document.querySelector("#save-button"); 
 
 const selectedItems = {
-    soups: null,
-    mainDishes: null,
-    salads: null,
-    desserts: null,
-    drinks: null,
+    soup: null,
+    "main-course": null,
+    salad: null,
+    dessert: null,
+    drink: null,
 };
+
+function checkValidCombo() {
+    const soup = document.querySelector("#drop-soup").textContent !== 
+    "Суп не выбран";
+    const mainDish = document.querySelector("#drop-main-dishes").textContent 
+    !== "Главное блюдо не выбрано";
+    const salad = document.querySelector("#drop-salads").textContent 
+    !== "Салат или стартер не выбран";
+    const drink = document.querySelector("#drop-main-drinks").textContent 
+    !== "Напиток не выбран";
+    const dessert = document.querySelector("#drop-desserts").textContent 
+    !== "Десерт не выбран";
+
+    if ((soup && mainDish && salad && drink) || 
+        (mainDish && salad && drink) || 
+        (soup && mainDish && drink) || 
+        (mainDish && drink) || 
+        (soup && salad && drink)) {
+        return true; 
+    } else {
+        return false;
+    }
+}
 
 function updateOrderSummary() {
     let totalCost = 0;
@@ -23,24 +49,36 @@ function updateOrderSummary() {
             orderContainer[category].innerHTML = `${item.name}-${item.price} ₽`;
             totalCost += item.price;
         } else {
-            orderContainer[category].innerHTML = `${
-                category === "soups"
-                    ? "Суп не выбран"
-                    : category === "mainDishes"
-                        ? "Главное блюдо не выбрано"
-                        : "Напиток не выбран"
+            orderContainer[category].innerHTML = `${category === "soups"
+                ? "Суп не выбран"
+                : category === "mainDishes"
+                    ? "Главное блюдо не выбрано"
+                    : "Напиток не выбран"
             }`;
         }
     }
-
-    const totalDiv = document.querySelector("#total-cost");
     if (totalCost > 0) {
-        totalDiv.style.display = "block";
-        totalDiv.textContent = `Стоимость заказа: ${totalCost} ₽`;
+        orderSummaryPanel.style.display = "block";
+        totalCostDiv.textContent = `Стоимость заказа: ${totalCost} ₽`;
+        isValidCombo = checkValidCombo();
+        checkoutButton.disabled = !isValidCombo;
     } else {
-        totalDiv.style.display = "none"; 
+        orderSummaryPanel.style.display = "none";
     }
 }
+
+function updateButtonState() {
+    const checkoutButton = document.querySelector("#save-button");
+    checkoutButton.disabled = !checkValidCombo();
+}
+
+document.querySelectorAll(".order-item").forEach(item => {
+    item.addEventListener("click", () => {
+        updateButtonState();
+    });
+});
+
+document.addEventListener("DOMContentLoaded", updateButtonState);
 
 function selectItem(category, item, card) {
     if (selectedItems[category]) {
@@ -48,13 +86,13 @@ function selectItem(category, item, card) {
             `[data-dish="${selectedItems[category].keyword}"]`
         );
         if (prevCard) {
-            prevCard.classList.remove('selected'); 
+            prevCard.classList.remove('selected');
         }
     }
 
     selectedItems[category] = item;
-    card.classList.add('selected'); 
-    updateOrderSummary(); 
+    card.classList.add('selected');
+    updateOrderSummary();
 }
 
 function loadMenuItems() {
@@ -69,7 +107,6 @@ function loadMenuItems() {
     for (const category in menuItems) {
         const items = menuItems[category];
         const container = containerMapping[category];
-
 
         items.sort((a, b) => a.name.localeCompare(b.name));
 
@@ -98,7 +135,7 @@ function loadMenuItems() {
 
             const button = document.createElement('button');
             button.textContent = 'Добавить';
-            button.addEventListener('click', () => 
+            button.addEventListener('click', () =>
                 selectItem(category, item, card)
             );
 
@@ -111,40 +148,6 @@ function loadMenuItems() {
         });
     }
 }
-
-
-document.querySelector("form").addEventListener("submit", (event) => {
-    event.preventDefault(); 
-
-    const form = event.target;
-    form.querySelectorAll(".order-hidden-field").forEach(field=>field.remove());
-
-    let totalCost = 0;
-
-    for (const category in selectedItems) {
-        const item = selectedItems[category];
-        if (item) {
-            totalCost += item.price;
-
-            const itemField = document.createElement("input");
-            itemField.type = "hidden";
-            itemField.name = category;
-            itemField.classList.add("order-hidden-field");
-            itemField.value = item.keyword; 
-            form.appendChild(itemField);
-        }
-    }
-
-    const totalCostField = document.createElement("input");
-    totalCostField.type = "hidden";
-    totalCostField.name = "total_cost";
-    totalCostField.classList.add("order-hidden-field");
-    totalCostField.value = totalCost;
-    form.appendChild(totalCostField);
-
-    //form.submit();
-});
-
 
 function filters() {
     const filterButtons = document.querySelectorAll('.filter-button');
@@ -163,7 +166,7 @@ function filters() {
 
             Array.from(children).forEach(child => {
                 child.style.display = 'none';
-                if (button.dataset.kind === child.dataset.kind || 
+                if (button.dataset.kind === child.dataset.kind ||
                     !button.dataset.kind) {
                     child.style.display = 'flex';
                 }
@@ -173,6 +176,17 @@ function filters() {
 }
 
 filters();
+
+function removeCard(category, itemKeyword, card) {
+    card.remove();
+
+    if (selectedItems[category]?.keyword === itemKeyword) {
+        selectedItems[category] = null;
+        orderContainer[category].textContent = "Не выбрано";
+        saveSelectionToLocalStorage();
+        updateOrderSummary();
+    }
+}
 
 function showNotification(message) {
     let notification = document.getElementById("notification");
@@ -240,19 +254,16 @@ function showNotification(message) {
 
 async function loadDishes() {
     const API_URL = "https://edu.std-900.ist.mospolytech.ru/labs/api/dishes";
-    
+
     try {
-        console.log("Отправка запроса к API...");
         const response = await fetch(API_URL);
-        
-        console.log("Ответ получен. Статус:", response.status);
+
         if (!response.ok) {
             throw new Error(`Ошибка загрузки данных: ${response.status}`);
         }
-        
+
         const dishes = await response.json();
-        console.log("Данные о блюдах получены:", dishes);
-        
+
         const groupedDishes = dishes.reduce((acc, dish) => {
             if (!acc[dish.category]) {
                 acc[dish.category] = [];
@@ -265,65 +276,26 @@ async function loadDishes() {
 
         loadMenuItems();
     } catch (error) {
-        console.error("Ошибка при загрузке блюд:", error);
         showNotification("Не удалось загрузить блюда. Попробуйте позже.");
     }
 }
 
-
-document.getElementById('order-form').addEventListener('submit',
-    function(event) {
-        
-        const soup = document.getElementById('drop-soup').textContent.trim();
-        const mainDish = 
-        document.getElementById('drop-main-dishes').textContent.trim();
-        const salad = document.getElementById('drop-salads').textContent.trim();
-        const dessert = 
-        document.getElementById('drop-desserts').textContent.trim();
-        const drink = 
-        document.getElementById('drop-main-drinks').textContent.trim();
-
-        const notifications = {
-            none: "Ничего не выбрано. Выберите блюда для заказа",
-            noDrink: "Выберите напиток",
-            noMainSaladStarter: "Выберите главное блюдо/салат/стартер",
-            noSoupOrMain: "Выберите суп или главное блюдо",
-            noMain: "Выберите главное блюдо",
-        };
-
-        let message = "";
-
-        const isSoupSelected = soup !== "Суп не выбран";
-        const isMainDishSelected = mainDish !== "Главное блюдо не выбрано";
-        const isSaladSelected = salad !== "Салат или стартер не выбран";
-        const isDessertSelected = dessert !== "Десерт не выбран";
-        const isDrinkSelected = drink !== "Напиток не выбран";
-
-        if (!isSoupSelected && 
-            !isMainDishSelected && !isSaladSelected && !isDrinkSelected) {
-            message = notifications.none;
-        } else if (!isDrinkSelected) {
-            message = notifications.noDrink;
-        } else if (isSoupSelected && !isMainDishSelected && !isSaladSelected) {
-            message = notifications.noMainSaladStarter;
-        } else if (isSaladSelected && !isSoupSelected && !isMainDishSelected) {
-            message = notifications.noSoupOrMain;
-        } else if (isDrinkSelected && !isDessertSelected) {
-            message = notifications.noMain;
+function saveSelectedItemsToLocalStorage() {
+    const itemsToSave = {};
+    for (const category in selectedItems) {
+        if (selectedItems[category]) {
+            itemsToSave[category] = selectedItems[category].keyword;  
         }
+    }
+    localStorage.setItem("selectedDishes", JSON.stringify(itemsToSave));  
 
-        if (message) {
-            event.preventDefault();
+    window.location.href = "order.html";  
+}
 
-            showNotification(message);
-            return; 
-        }
-
-        alert("Заказ успешно оформлен!");
-        this.submit();
-    });
+document.getElementById("save-button").addEventListener("click", 
+    saveSelectedItemsToLocalStorage);
 
 document.addEventListener("DOMContentLoaded", async () => {
-    await loadDishes(); 
+    await loadDishes();
     updateOrderSummary();
 });

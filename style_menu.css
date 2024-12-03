@@ -78,6 +78,10 @@ font-size: 1.2rem;
 margin: 0px;
 }
 
+#order-form{
+    display: none;
+}
+
 .name{
 font-size: 1.2rem;
 margin-bottom: 10px;
@@ -329,7 +333,41 @@ margin-right: 15px;
     text-align: center;
 }
 
-
+/* Container for total and button */
+.summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Styling for the total amount text */
+  .total {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  /* Styling for the save button */
+  .save-btn {
+    background-color: #6c63ff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .save-btn:hover {
+    background-color: #5a54d4;
+  }
+  
 
 
 
@@ -398,7 +436,7 @@ h1{
     h1{
         text-align: center;
       }
-    .dishes, .main-dishes, .drinks{
+    .dishes, .main-dishes, .drinks, .dessert, .salad{
         margin: auto;
         max-width: 980px;
         display: grid;

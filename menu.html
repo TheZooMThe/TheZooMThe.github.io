@@ -18,7 +18,7 @@
                 <div id="menu_flex">
                     <div class="menu-point"><a href="index.html">О нас</a></div>
                     <div class="menu-point"><a id="abutton" href="menu.html">Собрать ланч</a></div>
-                    <div class="menu-point"><a href="#">Заказы</a></div>
+                    <div class="menu-point"><a href="order.html">Заказы</a></div>
                     <div class="menu-point"><a href="#contact">Контакты</a></div>
                 </div>
             </nav>
@@ -165,6 +165,10 @@
             </section>
         </div>
 
+        <div id="order-summary-panel" style="display: none">
+            <p id="total-cost">Стоимость заказа: 0 ₽</p>
+            <button id="save-button" disabled>Перейти к оформлению</button>
+        </div>
         <form id="order-form" action="https://httpbin.org/post" method="post">
             <fieldset id="main-fieldset">
                 <legend id="legend-form">Сделать заказ</legend>
@@ -197,7 +201,7 @@
                             <div class="order-item" id="drop-main-drinks">Напиток не выбран</div>
                         </div>
 
-                        <div id="total-cost" style="display: none;"></div>
+                        
 
                         <div id="comment">
                             <label for="comment-textarea">Комментарии к заказу</label>

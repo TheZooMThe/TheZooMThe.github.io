@@ -1,0 +1,422 @@
+html, body{
+    margin: 0px;
+    padding: 0px;
+    font-family: "Merriweather", serif;
+    font-style: normal;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    font-size: 20px;
+}
+
+header, main
+{
+    flex-grow: 1;
+    margin-left: 35px;
+    margin-right: 35px;
+}
+
+#bbutton {
+    color: tomato;
+}
+
+.filter-button{
+
+    user-select: 0;
+    transition: all 0.25s;
+    cursor: pointer;
+    border-radius:  25px;
+    height: 50px;
+    width:  150px;
+    font-weight: 50px;
+}
+
+.filter-button:hover{
+    color: tomato;
+    background-color: grey;
+}
+
+.food_card>img{
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 35px;
+    margin-bottom: 10px;
+}
+
+.order_grid{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-row-gap: 10px;
+    justify-items: center;
+}
+
+.food_card{
+display: flex;
+flex-flow: column wrap;
+padding: 30px 40px 30px 40px;
+border: 2px solid transparent;
+border-radius: 35px;
+cursor: pointer;
+background: color white; 
+box-shadow: 17px 19px 24px rgba(0, 0, 0, 0.13);
+width: 300px;
+max-height: 600px;
+justify-content: space-between;
+align-content: center;
+}
+
+.food_card:hover{
+    
+    border: 2px solid tomato;
+    border-radius: 35px;
+}
+
+.price{
+font-size: 1.2rem;
+margin: 0px;
+}
+
+.name{
+font-size: 1.2rem;
+margin-bottom: 10px;
+margin-top: 0px;
+}
+
+.volume{
+color: grey;
+margin: 0px;
+}
+
+.food_card>button{
+background-color: #f1eee9;
+margin-top: 10px;
+border-radius: 10px;
+cursor: pointer;
+padding: 10px 30px 10px 30px;
+margin-top: 10px;
+font-size: 1rem;
+}
+
+.food_card>button:hover{
+    background-color: rgb(175, 171, 171);
+}
+
+#menu_flex{
+    display: flex;
+    flex-direction: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    
+    
+}
+
+.fieldset-switch{
+    border:0 none;
+}
+
+.menu-point{
+margin-right: 15px;
+}
+
+#menu>a:active{
+    color: red;
+}
+
+.menu a
+{
+    font-weight: bold;
+    text-decoration: none;
+    color: black;
+
+}
+.menu a:hover
+{
+    color: red;
+    
+}
+.menu ul{
+    margin-top: 35px;
+}
+
+#main-fieldset{
+    margin-top: 50px;
+    border: none;
+}
+
+.filter-button.active {
+    background-color: tomato;
+    color: white;
+}
+
+
+
+#legend-form{
+    font-size: 140%;
+    text-align: center;
+    font-weight: bold;
+}
+
+.order-data{
+    font-weight: normal;
+}
+
+#main_div_form{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 680px;
+    margin: auto;
+    justify-items: center;
+}
+.drop-menu{
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+    margin: 20px 0;
+
+}
+.drop-menu-class{
+    width: 290px;
+    height: 39px;
+    
+}
+
+.filter-button.active {
+    background-color: #a8d5ba; 
+    color: white;
+    border-color: #a8d5ba;
+  }
+
+.input{
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+    margin: 20px 0; 
+    max-width: 310px;
+}
+#comment{
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+    margin: 20px 0;
+}
+
+#comment-textarea{
+    min-width: 280px;
+    max-width: 280px;
+    height: 110px;
+    padding: 0 5px;
+
+}
+
+.input-field{
+    padding: 0 5px;
+    width: 290px;
+    height: 35px;
+}
+.input-note{
+    margin: 0;
+    font-size: 75%;
+    font-style: italic;
+}
+
+.newspapper{
+    font-size: 80%;
+}
+
+#delivery-time{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#delivery-time-main-label{
+    margin: 0;
+}
+
+.form-btn{
+    width: 143px;
+    padding: 10px 0;
+    font-size: bold;
+   
+}
+
+.form-btn:hover{
+    color: tomato;
+}
+
+
+.food_card.selected {
+    border: 2px solid tomato; 
+  }
+  
+  #customer-order .order-item {
+    padding: 8px 0;
+    font-size: 14px;
+    color: #333;
+  }
+  
+  #total-cost {
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    color:  tomato;
+  }
+  
+
+.combo {
+    text-align: center;
+    margin: 20px;
+}
+
+.combo h2 {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.combo-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    justify-items: center;
+    margin-top: 20px;
+}
+
+.combo-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.dish {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.dish img {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 5px;
+}
+
+.dish p {
+    font-size: 14px;
+    margin: 0;
+}
+
+.note {
+    font-size: 12px;
+    color: gray;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.combo-column{
+    display: flex;
+    gap: 15px;
+}
+
+.dish:hover > .combo-icon{
+    transform: scale(1.2) translateY(-10px);
+}
+
+#combo-zag {
+    font-size: 180%;
+    margin-bottom: 55px;
+    text-align: center;
+}
+
+
+
+
+
+footer{
+    
+    background-color: black;
+    color: white;
+    margin: 0px;
+    font-size: xx-large;
+    padding: 50px;
+    box-sizing: border-box
+    
+
+}
+
+.food-img
+{
+    width: 700px;
+    height: 450px;
+    padding-bottom: 15px;
+}
+
+
+
+
+
+
+/* media for screens <1200px */
+
+@media only screen and (max-width: 1400px){
+
+.menu{
+    flex-direction: column;
+    gap: 30px;
+    margin-bottom: 32px;
+
+}
+
+.food_card>button{
+    padding: 35px 60px 32px 60px;
+}
+
+h1{
+    margin: 30px auto ;
+  }
+
+#menu_flex{
+    margin: 0;
+    justify-content: space-between;
+}
+}
+
+/* media for screens <1000px */
+
+@media only screen and (max-width: 1200px){
+
+    #menu_flex{
+        flex-direction: column;
+        gap: 66px;
+    }
+    
+    h2{
+        text-align: center;
+        margin: 30px 0;
+    }
+    h1{
+        text-align: center;
+      }
+    .order_grid{
+        margin: auto;
+        max-width: 980px;
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr 1fr;
+        justify-items: center;
+        row-gap: 10px;
+    
+    }
+    #main_div_form{
+        width: 340px;
+        grid-template-columns: 1fr;
+        gap: 50px;
+    }
+    .newspapper{
+        max-width: 250px;
+    }
+    
+}
+
+ 
