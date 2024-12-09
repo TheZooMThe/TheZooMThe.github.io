@@ -333,7 +333,6 @@ margin-right: 15px;
     text-align: center;
 }
 
-/* Container for total and button */
 .summary {
     display: flex;
     justify-content: space-between;
@@ -345,23 +344,33 @@ margin-right: 15px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   }
   
-  /* Styling for the total amount text */
   .total {
     font-size: 18px;
     font-weight: bold;
     color: #333;
   }
   
-  /* Styling for the save button */
-  .save-btn {
-    background-color: #6c63ff;
-    color: white;
+  #order-summary-panel{
+    position: sticky;
+    bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+    border: 2px solid tomato;
+    padding: 40px;
+    background-color: rgb(3 0 4 / 33%);
+  }
+
+  #save-button {
+    font-size: 100%;
+    padding: 10px;
+    text-align: center;
     border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    border-radius: 5px;
+    border-radius: 10px;
+    background-color: #f1eee9;
+    text-decoration: none;
+    transition: color 0.25s, background-color 0.25s;
     cursor: pointer;
-    transition: background-color 0.3s ease;
   }
   
   .save-btn:hover {

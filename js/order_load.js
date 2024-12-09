@@ -19,8 +19,8 @@ function updateOrderSummary() {
     for (const category in selectedItems) {
         const item = selectedItems[category];
         if (item) {
-            orderContainer[category].textContent = 
-            `${item.name} - ${item.price} ₽`;
+            orderContainer[category].textContent =
+                `${item.name} - ${item.price} ₽`;
             totalCost += item.price;
         } else {
             orderContainer[category].textContent = "Не выбрано";
@@ -28,7 +28,7 @@ function updateOrderSummary() {
     }
     const totalDiv = document.querySelector("#total-cost");
     if (totalCost > 0) {
-        totalDiv.style.display = "block";
+        totalDiv.style.display = "flex";
         totalDiv.textContent = `Стоимость заказа: ${totalCost} ₽`;
     } else {
         totalDiv.style.display = "none";
@@ -47,8 +47,8 @@ function saveSelectionToLocalStorage() {
 
 function selectItem(category, item, card) {
     if (selectedItems[category]) {
-        const prevCard = 
-        document.querySelector(`
+        const prevCard =
+            document.querySelector(`
             [data-dish="${selectedItems[category].keyword}"]`);
         if (prevCard) {
             prevCard.classList.remove('selected');
@@ -70,6 +70,18 @@ function removeCard(category, itemKeyword, card) {
         updateOrderSummary();
     }
 }
+
+function removeAllCards() {
+    const container = document.querySelector('.order_grid');
+    
+    const allCards = container.querySelectorAll('.food_card');
+    
+    // Удаляем все карточки
+    allCards.forEach(card => {
+        card.remove();
+    });
+}
+
 
 function loadMenuItems(filteredMenuItems) {
     const container = document.querySelector('.order_grid');
@@ -114,7 +126,7 @@ function loadMenuItems(filteredMenuItems) {
 document.querySelector("form").addEventListener("submit", (event) => {
     event.preventDefault();
     const form = event.target;
-    form.querySelectorAll(".order-hidden-field").forEach(field => 
+    form.querySelectorAll(".order-hidden-field").forEach(field =>
         field.remove());
     let totalCost = 0;
     for (const category in selectedItems) {
@@ -166,8 +178,8 @@ async function loadDishes() {
             const savedDishKeyword = savedDishes[category];
             const dish = dishes.find(d => d.keyword === savedDishKeyword);
             if (dish) {
-                const card = 
-                document.querySelector(`[data-dish="${dish.keyword}"]`);
+                const card =
+                    document.querySelector(`[data-dish="${dish.keyword}"]`);
                 if (card) {
                     selectItem(category, dish, card);
                 }
@@ -179,72 +191,82 @@ async function loadDishes() {
     }
 }
 
-document.querySelector("#submit-btn").addEventListener("click", 
-    async (event) => {
-        event.preventDefault();
-        const form = document.querySelector("#order-form");
-        const fullName = document.querySelector("#input-name").value;
-        const email = document.querySelector("#input-email").value;
-        const phone = document.querySelector("#input-phone").value;
-        const deliveryAddress = document.querySelector("#input-address").value;
-        const deliveryTime = document.querySelector("#input-time").value;
-        const deliveryType = 
-        document.querySelector('input[name="when_delivery"]:checked').value;
-        const comment = document.querySelector("#comment-textarea").value;
-        const selectedDishes = loadSelectedDishesFromLocalStorage();
-        if (Object.keys(selectedDishes).length === 0) {
-            alert("Пожалуйста, выберите хотя бы одно блюдо!");
-            return;
-        }
-        const orderData = {
-            full_name: fullName,
-            email: email,
-            phone: phone,
-            delivery_address: deliveryAddress,
-            delivery_time: deliveryTime,
-            delivery_type: deliveryType,
-            comment: comment || null,
-            soup_id: selectedDishes.soup || null,
-            main_course_id: selectedDishes["main-course"] || null,
-            salad_id: selectedDishes.salad || null,
-            dessert_id: selectedDishes.dessert || null,
-            drink_id: selectedDishes.drink || null,
-            student_id: "8d1c5ae7-15f2-43a9-9364-c17231682e71",
-        };
-        const formData = new FormData();
-        for (const [key, value] of Object.entries(orderData)) {
-            if (value !== null) {
-                formData.append(key, value);
-            }
-        }
-        try {
-            const response = await 
-            fetch("https://edu.std-900.ist.mospolytech.ru/labs/api/orders", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "API-Key": "8d1c5ae7-15f2-43a9-9364-c17231682e71",
-                },
-                body: JSON.stringify(orderData),
-            });
-            if (!response.ok) {
-                throw new Error(`Ошибка: ${response.statusText}`);
-            }
-            const result = await response.json();
-            if (result.error) {
-                throw new Error(result.error);
-            }
-            localStorage.removeItem("selectedDishes");
-            alert("Ваш заказ успешно отправлен!");
-            form.reset();
-            updateOrderSummary();
-        } catch (error) {
-            alert(`Произошла ошибка: ${error.message}`);
-            console.log(orderData);
-        }
+function clearSelectedItems() {
+    console.log("Очистка всех выбранных блюд");
+    for (const category in selectedItems) {
+        selectedItems[category] = null;
+        orderContainer[category].textContent = "Не выбрано";
+    }
+    saveSelectionToLocalStorage();
+    updateOrderSummary();
+    console.log("После очистки:", selectedItems);
+}
+async function handleOrderSubmission(event) {
+    event.preventDefault(); 
+
+    const formElement = document.querySelector('#order-form');
+    if (!formElement) {
+        console.error("Форма не найдена.");
+        return;
+    }
+
+    const formData = new FormData(formElement);
+
+    const fullName = formElement.querySelector('#input-name').value;
+    const email = formElement.querySelector('#input-email').value;
+    const phone = formElement.querySelector('#input-phone').value;
+    const deliveryAddress = formElement.querySelector('#input-address').value;
+    const deliveryType = formElement.querySelector(
+        'input[name="when_delivery"]:checked')?.value || "now";
+
+    formData.append("full_name", fullName);
+    formData.append("email", email);
+    formData.append("phone", phone);
+    formData.append("delivery_address", deliveryAddress);
+    formData.append("delivery_type", deliveryType);
+
+    const selections = {
+        soup_id: selectedItems?.soup?.id || null,
+        main_course_id: selectedItems?.["main-course"]?.id || null,
+        salad_id: selectedItems?.salad?.id || null,
+        drink_id: selectedItems?.drink?.id || null,
+    };
+
+    Object.entries(selections).forEach(([key, value]) => {
+        if (value) formData.append(key, value);
     });
+
+    try {
+        const response = await fetch(
+            'https://edu.std-900.ist.mospolytech.ru/labs/api/orders?api_key=8d1c5ae7-15f2-43a9-9364-c17231682e71',
+            {
+                method: 'POST',
+                body: formData,
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error(`Ошибка сервера: ${response.status}`);
+        }
+
+        const result = await response.json();
+        console.log('Заказ успешно размещён:', result);
+
+        clearSelectedItems();
+        removeAllCards();
+        alert("Ваш заказ успешно оформлен!");
+    } catch (error) {
+        console.error('Ошибка при размещении заказа:', error);
+        alert("Ошибка при размещении заказа. Попробуйте снова.");
+    }
+}
+
+
+document.querySelector('#order-form').addEventListener('submit', 
+    handleOrderSubmission);
 
 document.addEventListener("DOMContentLoaded", async () => {
     await loadDishes();
     updateOrderSummary();
 });
+
