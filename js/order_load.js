@@ -41,6 +41,89 @@ function updateOrderSummary() {
     }
 }
 
+
+function showNotification(message) {
+    let notification = document.getElementById("notification");
+    if (!notification) {
+        notification = document.createElement("div");
+        notification.id = "notification";
+        notification.style.position = "fixed";
+        notification.style.top = "0";
+        notification.style.left = "0";
+        notification.style.width = "100%";
+        notification.style.height = "100%";
+        notification.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
+        notification.style.display = "flex";
+        notification.style.justifyContent = "center";
+        notification.style.alignItems = "center";
+        notification.style.zIndex = "1000";
+
+        const content = document.createElement("div");
+        content.style.backgroundColor = "white";
+        content.style.padding = "20px";
+        content.style.borderRadius = "10px";
+        content.style.textAlign = "center";
+        content.style.boxShadow = "0 4px 10px rgba(0, 0, 0, 0.2)";
+        content.id = "notification-content";
+
+        const text = document.createElement("p");
+        text.style.marginBottom = "20px";
+        text.style.fontSize = "18px";
+        text.id = "notification-text";
+
+        const closeButton = document.createElement("button");
+        closeButton.textContent = "Окей";
+        closeButton.style.padding = "10px 20px";
+        closeButton.style.fontSize = "16px";
+        closeButton.style.backgroundColor = "tomato";
+        closeButton.style.color = "white";
+        closeButton.style.border = "none";
+        closeButton.style.borderRadius = "5px";
+        closeButton.style.cursor = "pointer";
+
+        closeButton.addEventListener("mouseover", function () {
+            closeButton.style.backgroundColor = "white";
+            closeButton.style.color = "tomato";
+            closeButton.style.border = "2px solid tomato";
+        });
+
+        closeButton.addEventListener("mouseout", function () {
+            closeButton.style.backgroundColor = "tomato";
+            closeButton.style.color = "white";
+            closeButton.style.border = "none";
+        });
+
+        closeButton.addEventListener("click", function () {
+            notification.remove();
+        });
+
+        content.appendChild(text);
+        content.appendChild(closeButton);
+        notification.appendChild(content);
+        document.body.appendChild(notification);
+    }
+
+    document.getElementById("notification-text").textContent = message;
+}
+
+function checkValidCombo() {
+    const soup = selectedItems.soup !== null;;
+    const mainDish = selectedItems["main-course"] !== null;
+    const salad = selectedItems.salad !== null;
+    const drink = selectedItems.drink !== null;
+    const dessert = selectedItems.dessert !== null;
+
+    // Варианты валидных комбинаций
+    const isCombo1 = soup && mainDish && salad && drink;
+    const isCombo2 = mainDish && salad && drink;
+    const isCombo3 = soup && mainDish && drink;
+    const isCombo4 = mainDish && drink;
+    const isCombo5 = soup && salad && drink;
+
+    // Проверяем соответствие хотя бы одной из комбинаций
+    return isCombo1 || isCombo2 || isCombo3 || isCombo4 || isCombo5;
+}
+
 function saveSelectionToLocalStorage() {
     const selectedIds = {};
     for (const category in selectedItems) {
@@ -244,6 +327,7 @@ async function handleOrderSubmission(event) {
     console.log(currentTimeFormatted);
     console.log(deliveryTime);
 
+
     const formData = new FormData();
     formData.append("full_name", fullName);
     formData.append("email", email);
@@ -263,6 +347,11 @@ async function handleOrderSubmission(event) {
     Object.entries(selections).forEach(([key, value]) => {
         if (value) formData.append(key, value);
     });
+    // Проверка валидности комбо
+    if (!checkValidCombo()) {
+        showNotification("Не соответствует комбо");
+        return; // Останавливаем выполнение, если комбо не соответствует
+    }
     try {
         const response = await fetch(
             ORDERS_API_URL,
@@ -282,10 +371,10 @@ async function handleOrderSubmission(event) {
         formElement.reset();
         clearSelectedItems();
         removeAllCards();
-        alert("Ваш заказ успешно оформлен!");
+        showNotification("Ваш заказ успешно оформлен!");
     } catch (error) {
         console.error('Ошибка при размещении заказа:', error);
-        alert("Ошибка при размещении заказа. Попробуйте снова.");
+        showNotification("Ошибка при размещении заказа. Попробуйте снова.");
     }
 }
 
