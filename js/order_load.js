@@ -201,6 +201,7 @@ function clearSelectedItems() {
     updateOrderSummary();
     console.log("После очистки:", selectedItems);
 }
+
 async function handleOrderSubmission(event) {
     event.preventDefault(); 
 
@@ -210,20 +211,27 @@ async function handleOrderSubmission(event) {
         return;
     }
 
-    const formData = new FormData(formElement);
+    const formData = new FormData();
+    const dataToSend2 = {};
+    formData.forEach((value, key) => {
+        dataToSend2[key] = value;
+    });
+    console.log("Данные, до:", dataToSend2);
 
     const fullName = formElement.querySelector('#input-name').value;
     const email = formElement.querySelector('#input-email').value;
     const phone = formElement.querySelector('#input-phone').value;
+    const delivery_time = formElement.querySelector('#input-time').value;
     const deliveryAddress = formElement.querySelector('#input-address').value;
     const deliveryType = formElement.querySelector(
-        'input[name="when_delivery"]:checked')?.value || "now";
+        'input[name="delivery_type"]:checked')?.value || "now";
 
     formData.append("full_name", fullName);
     formData.append("email", email);
     formData.append("phone", phone);
     formData.append("delivery_address", deliveryAddress);
     formData.append("delivery_type", deliveryType);
+    formData.append("delivery_time", delivery_time);
 
     const selections = {
         soup_id: selectedItems?.soup?.id || null,
@@ -232,22 +240,35 @@ async function handleOrderSubmission(event) {
         drink_id: selectedItems?.drink?.id || null,
     };
 
-    Object.entries(selections).forEach(([key, value]) => {
-        if (value) formData.append(key, value);
-    });
+    const orderData = {
+        full_name: fullName,
+        email: email,
+        phone: phone,
+        delivery_address: deliveryAddress,
+        delivery_type: deliveryType,
+        delivery_time: deliveryType === "by_time" ? delivery_time : null,
+        ...selections,
+    };
+    console.log("Данные, отправляемые на сервер:", orderData);
 
     try {
         const response = await fetch(
             'https://edu.std-900.ist.mospolytech.ru/labs/api/orders?api_key=8d1c5ae7-15f2-43a9-9364-c17231682e71',
             {
                 method: 'POST',
-                body: formData,
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(orderData),
             }
         );
 
         if (!response.ok) {
+            const errorDetails = await response.text();
+            console.error(`Ошибка сервера: ${response.status}, детали: ${errorDetails}`);
             throw new Error(`Ошибка сервера: ${response.status}`);
         }
+        
 
         const result = await response.json();
         console.log('Заказ успешно размещён:', result);
