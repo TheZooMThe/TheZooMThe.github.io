@@ -19,26 +19,21 @@ const selectedItems = {
 };
 
 function checkValidCombo() {
-    const soup = document.querySelector("#drop-soup").textContent !== 
-    "Суп не выбран";
-    const mainDish = document.querySelector("#drop-main-dishes").textContent 
-    !== "Главное блюдо не выбрано";
-    const salad = document.querySelector("#drop-salads").textContent 
-    !== "Салат или стартер не выбран";
-    const drink = document.querySelector("#drop-main-drinks").textContent 
-    !== "Напиток не выбран";
-    const dessert = document.querySelector("#drop-desserts").textContent 
-    !== "Десерт не выбран";
+    const soup = selectedItems.soup !== null;;
+    const mainDish = selectedItems["main-course"] !== null;
+    const salad = selectedItems.salad !== null;
+    const drink = selectedItems.drink !== null;
+    const dessert = selectedItems.dessert !== null;
 
-    if ((soup && mainDish && salad && drink) || 
-        (mainDish && salad && drink) || 
-        (soup && mainDish && drink) || 
-        (mainDish && drink) || 
-        (soup && salad && drink)) {
-        return true; 
-    } else {
-        return false;
-    }
+    // Варианты валидных комбинаций
+    const isCombo1 = soup && mainDish && salad && drink;
+    const isCombo2 = mainDish && salad && drink;
+    const isCombo3 = soup && mainDish && drink;
+    const isCombo4 = mainDish && drink;
+    const isCombo5 = soup && salad && drink;
+
+    // Проверяем соответствие хотя бы одной из комбинаций
+    return isCombo1 || isCombo2 || isCombo3 || isCombo4 || isCombo5;
 }
 
 function updateOrderSummary() {

@@ -6,6 +6,12 @@ const orderContainer = {
     drink: document.querySelector("#drop-main-drinks"),
 };
 
+const BASE_API_URL = 'https://edu.std-900.ist.mospolytech.ru/labs/api';
+const API_KEY = '8d1c5ae7-15f2-43a9-9364-c17231682e71';
+
+const ORDERS_API_URL = `${BASE_API_URL}/orders?api_key=${API_KEY}`;
+const DISHES_API_URL = `${BASE_API_URL}/dishes?api_key=${API_KEY}`;
+
 const selectedItems = {
     soup: null,
     "main-course": null,
@@ -211,28 +217,42 @@ async function handleOrderSubmission(event) {
         return;
     }
 
-    const formData = new FormData();
-    const dataToSend2 = {};
-    formData.forEach((value, key) => {
-        dataToSend2[key] = value;
-    });
-    console.log("Данные, до:", dataToSend2);
-
     const fullName = formElement.querySelector('#input-name').value;
     const email = formElement.querySelector('#input-email').value;
     const phone = formElement.querySelector('#input-phone').value;
-    const delivery_time = formElement.querySelector('#input-time').value;
+    const deliveryTime = formElement.querySelector('#input-time').value;
     const deliveryAddress = formElement.querySelector('#input-address').value;
-    const deliveryType = formElement.querySelector(
-        'input[name="delivery_type"]:checked')?.value || "now";
+    const checkedInput = 
+    formElement.querySelector('input[name="when_delivery"]:checked');//мб баг
+    const deliveryType = checkedInput ? checkedInput.value : "now";
 
+
+    // Получаем текущее время
+    const currentTime = new Date();
+    const currentHours = currentTime.getHours();
+    const currentMinutes = currentTime.getMinutes();
+    const currentTimeFormatted = 
+    `${currentHours}:${currentMinutes < 10 
+        ? '0' + currentMinutes : currentMinutes}`;
+
+    // Проверяем, если время доставки раньше текущего
+    if (deliveryType === "by_time" && deliveryTime < currentTimeFormatted) {
+        alert("Время доставки не может быть раньше текущего времени.");
+        return;
+    }
+
+    console.log(currentTimeFormatted);
+    console.log(deliveryTime);
+
+    const formData = new FormData();
     formData.append("full_name", fullName);
     formData.append("email", email);
     formData.append("phone", phone);
     formData.append("delivery_address", deliveryAddress);
     formData.append("delivery_type", deliveryType);
-    formData.append("delivery_time", delivery_time);
+    formData.append("delivery_time", deliveryTime);
 
+    // Отправляем дополнительные данные
     const selections = {
         soup_id: selectedItems?.soup?.id || null,
         main_course_id: selectedItems?.["main-course"]?.id || null,
@@ -240,39 +260,26 @@ async function handleOrderSubmission(event) {
         drink_id: selectedItems?.drink?.id || null,
     };
 
-    const orderData = {
-        full_name: fullName,
-        email: email,
-        phone: phone,
-        delivery_address: deliveryAddress,
-        delivery_type: deliveryType,
-        delivery_time: deliveryType === "by_time" ? delivery_time : null,
-        ...selections,
-    };
-    console.log("Данные, отправляемые на сервер:", orderData);
-
+    Object.entries(selections).forEach(([key, value]) => {
+        if (value) formData.append(key, value);
+    });
     try {
         const response = await fetch(
-            'https://edu.std-900.ist.mospolytech.ru/labs/api/orders?api_key=8d1c5ae7-15f2-43a9-9364-c17231682e71',
+            ORDERS_API_URL,
             {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(orderData),
+                body: formData,
             }
         );
 
         if (!response.ok) {
-            const errorDetails = await response.text();
-            console.error(`Ошибка сервера: ${response.status}, детали: ${errorDetails}`);
             throw new Error(`Ошибка сервера: ${response.status}`);
         }
-        
 
         const result = await response.json();
         console.log('Заказ успешно размещён:', result);
 
+        formElement.reset();
         clearSelectedItems();
         removeAllCards();
         alert("Ваш заказ успешно оформлен!");
